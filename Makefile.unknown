@@ -1,0 +1,33 @@
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall -Wextra
+
+# Target executable name
+TARGET = db_test
+
+# Source files
+SOURCES = db_driver.cpp AVL_Database.cpp
+OBJECTS = $(SOURCES:.cpp=.o)
+
+# Header files
+HEADERS = AVL_Database.hpp
+
+# Default target
+all: $(TARGET)
+
+# Link the target executable
+$(TARGET): $(OBJECTS)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(TARGET)
+
+# Compile source files
+%.o: %.cpp $(HEADERS)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+# Clean up
+clean:
+	rm -f $(OBJECTS) $(TARGET)
+
+# Run the tests
+test: $(TARGET)
+	./$(TARGET)
+
+.PHONY: all clean test
